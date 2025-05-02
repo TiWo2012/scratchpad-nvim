@@ -1,9 +1,15 @@
 local api = vim.api
+local buf = nil
+local options = { language=nil }
 
 local M = {}
 
 local function open()
-  print("Open scratchpad from dev")
+  buf = api.nvim_create_buf(true, true)
+
+  api.nvim_buf_set_name(buf, "scratchpad")
+
+  api.nvim_buf_set_option(buf, "fliletype", options.language)
 end
 
 local function createUserCommands()
@@ -16,7 +22,9 @@ local function createUserCommands()
   )
 end
 
-function M.setup()
+function M.setup(opts)
+
+  options = opts
   createUserCommands()
 end
 
