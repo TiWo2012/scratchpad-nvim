@@ -8,7 +8,7 @@ local function createBuf()
   buf = api.nvim_create_buf(true, true)
 
   api.nvim_buf_set_name(buf, "scratchpad")
-  api.nvim_buf_set_option(buf, "filetype", options.language)  -- Fixed typo here
+  api.nvim_buf_set_option(buf, "filetype", options.language) -- Fixed typo here
 end
 
 local function open()
@@ -25,7 +25,15 @@ local function open()
     anchor = 'NW',
     border = 'rounded',
   })
-  api.nvim_win_set_option(win, 'wrap', false)  -- Optional: Set wrap option
+  api.nvim_win_set_option(win, 'wrap', false) -- Optional: Set wrap option
+end
+
+local function close()
+  if buf == nil then
+    return
+  else
+    api.nvim_buf_set_lines(buf, 0, -1, false, {})
+  end
 end
 
 local function createUserCommands()
@@ -33,6 +41,14 @@ local function createUserCommands()
     "ScratchOpen",
     function()
       open()
+    end,
+    { nargs = 0 }
+  )
+
+  api.nvim_create_user_command(
+    "ScratchClose",
+    function()
+      close()
     end,
     { nargs = 0 }
   )
