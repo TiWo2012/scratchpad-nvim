@@ -3,7 +3,7 @@ local api = vim.api
 local M = {}
 
 local function open()
-  print("opening scratchpad")
+  print("Open scratchpad from dev")
 end
 
 local function createUserCommands()
